@@ -1,0 +1,6 @@
+{
+  "name": "나의 브랜드 발견소",
+  "description": "여성 시민이 자신의 숨은 경험과 강점을 발견하고 1페이지 퍼스널 브랜드 프로필을 완성하는 반응형 웹서비스",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

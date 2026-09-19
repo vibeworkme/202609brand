@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    color: #2b272d;
+    background-color: #faf9f7;
+    letter-spacing: -0.015em;
+  }
+}
+
+/* Print Optimization for 1-Page A4 Profile */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 12mm 12mm 12mm;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    color: #1a161b !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Hide everything except the print container */
+  header,
+  footer,
+  .no-print,
+  button,
+  .action-bar {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .profile-a4-sheet {
+    box-shadow: none !important;
+    border: 1px solid #e5e3df !important;
+    margin: 0 !important;
+    padding: 24px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
