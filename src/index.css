@@ -1,24 +1,63 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'GmarketSans';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GmarketSans';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   body {
-    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
-    color: #2b272d;
-    background-color: #faf9f7;
-    letter-spacing: -0.015em;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    color: #181818;
+    background-color: #ffffff;
+    letter-spacing: -0.02em;
   }
+}
+
+.font-display {
+  font-family: 'GmarketSans', "Pretendard", sans-serif;
+  letter-spacing: -0.03em;
+}
+
+/* Stationery Graph Paper Grid Background */
+.bg-grid-paper {
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(to right, #eceff3 1px, transparent 1px),
+    linear-gradient(to bottom, #eceff3 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.bg-grid-paper-subtle {
+  background-color: #fcfcfd;
+  background-image:
+    linear-gradient(to right, #f1f3f6 1px, transparent 1px),
+    linear-gradient(to bottom, #f1f3f6 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
 /* Print Optimization for 1-Page A4 Profile */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 12mm 12mm 12mm 12mm;
+    margin: 10mm 10mm 10mm 10mm;
   }
 
   body {
     background-color: #ffffff !important;
-    color: #1a161b !important;
+    background-image: none !important;
+    color: #141414 !important;
     font-size: 13px !important;
     line-height: 1.5 !important;
   }
@@ -38,7 +77,7 @@
 
   .profile-a4-sheet {
     box-shadow: none !important;
-    border: 1px solid #e5e3df !important;
+    border: 2px solid #181818 !important;
     margin: 0 !important;
     padding: 24px !important;
     max-width: 100% !important;

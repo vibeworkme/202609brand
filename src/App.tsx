@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ChevronRight } from 'lucide-react';
 import {
   AppState,
   DiagnosisResult,
@@ -21,6 +22,7 @@ import { DiagnosisResultView } from './components/DiagnosisResultView';
 import { BrandStatementBuilderView } from './components/BrandStatementBuilderView';
 import { ProfilePageView } from './components/ProfilePageView';
 import { ResetConfirmModal } from './components/ResetConfirmModal';
+import { CardCharacterAvatar, SpeechBubbleTitle } from './components/StationeryIllustrations';
 
 const STORAGE_KEY = 'my_brand_discovery_data_v2';
 
@@ -37,7 +39,8 @@ const INITIAL_STATEMENT: BrandStatementComponents = {
   experience: '살림과 소통으로 축적된 경험',
   strength: '체계적인 기획력과 세심한 지원력',
   value: '새로운 자신감과 질서',
-  fullSentence: '나는 경력 복귀를 고민하는 여성이 시작의 두려움과 막막함을 해결할 수 있도록, 체계적인 기획력과 세심한 지원력을 활용해 새로운 자신감과 질서를 만드는 사람입니다.',
+  fullSentence:
+    '나는 경력 복귀를 고민하는 여성이 시작의 두려움과 막막함을 해결할 수 있도록, 체계적인 기획력과 세심한 지원력을 활용해 새로운 자신감과 질서를 만드는 사람입니다.',
   selectedTemplateIdx: 0
 };
 
@@ -47,7 +50,8 @@ const INITIAL_PROFILE_DETAILS: ProfileDetails = {
     '상대방의 불편함을 세심하게 살피고 돕기',
     '예산과 일정을 낭비 없이 꼼꼼하게 운영하기'
   ],
-  representativeExperience: '가정 살림과 자원봉사, 다양한 일상의 프로젝트를 주도하며 실전 역량을 키웠습니다.',
+  representativeExperience:
+    '가정 살림과 자원봉사, 다양한 일상의 프로젝트를 주도하며 실전 역량을 키웠습니다.',
   targetAudience: '새로운 시작을 주저하는 여성 이웃들',
   activitiesOrServices: [
     '라이프스타일 및 공간 정리수납 컨설팅',
@@ -118,6 +122,12 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleStartWithLifeStage = (stage: string) => {
+    setBasicInfo((prev) => ({ ...prev, lifeStage: stage }));
+    setCurrentScreen('questionnaire');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleContinue = () => {
     if (diagnosis) {
       setCurrentScreen('profile');
@@ -138,11 +148,23 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handlePreviewDiagnosisSample = () => {
+    if (!diagnosis) {
+      const sample = getSamplePresetState();
+      setBasicInfo(sample.basicInfo);
+      setAnswers(sample.answers);
+      setDiagnosis(sample.diagnosis);
+      setStatement(sample.statement);
+      setProfileDetails(sample.profileDetails);
+    }
+    setCurrentScreen('diagnosis');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleFillCurrentSample = (questionId: number) => {
     const q = QUESTIONS.find((item) => item.id === questionId);
     if (!q) return;
 
-    // Pick top 2 options
     const defaultOptionIds = q.options.slice(0, q.maxSelect || 1).map((o) => o.id);
     const defaultText = q.defaultSampleAnswer || '';
 
@@ -188,8 +210,14 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const needsDiagnosisScreen =
+    (currentScreen === 'diagnosis' ||
+      currentScreen === 'statement' ||
+      currentScreen === 'profile') &&
+    !diagnosis;
+
   return (
-    <div className="min-h-screen flex flex-col bg-[#faf9f7] text-[#28212c]">
+    <div className="min-h-screen flex flex-col bg-white text-[#181818]">
       {/* Sticky Header Navbar */}
       <Navbar
         currentScreen={currentScreen}
@@ -207,7 +235,10 @@ export default function App() {
         {currentScreen === 'landing' && (
           <LandingView
             onStart={handleStart}
+            onStartWithLifeStage={handleStartWithLifeStage}
             onLoadSample={handleLoadSample}
+            onPreviewDiagnosisSample={handlePreviewDiagnosisSample}
+            onReset={() => setIsResetModalOpen(true)}
             hasSavedData={hasSavedData}
             onContinue={handleContinue}
           />
@@ -225,7 +256,48 @@ export default function App() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onFillCurrentSample={handleFillCurrentSample}
+            onReset={() => setIsResetModalOpen(true)}
+            hasSavedData={hasSavedData}
           />
+        )}
+
+        {needsDiagnosisScreen && (
+          <section className="bg-[#FDD116] py-16 px-4 sm:px-6 min-h-[70vh] flex items-center">
+            <div className="max-w-xl mx-auto w-full text-center">
+              <SpeechBubbleTitle className="mb-8">
+                먼저 <span className="text-[#FDD116]">경험 질문</span>을 채워볼까요?
+              </SpeechBubbleTitle>
+              <div className="bg-white rounded-[26px] p-8 sm:p-10 shadow-md">
+                <div className="flex justify-center mb-4">
+                  <CardCharacterAvatar variant="coral" />
+                </div>
+                <h2 className="font-display font-bold text-2xl text-[#161616] mb-2">
+                  아직 진단된 강점 데이터가 없어요
+                </h2>
+                <p className="text-sm sm:text-base text-[#4A505A] leading-relaxed mb-7">
+                  6가지 경험 질문에 답하면 나만의 대표 강점 타입과 브랜드 문장, 1페이지 프로필이 자동으로 완성됩니다.
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={handleStart}
+                    className="w-full sm:w-auto min-h-[50px] px-7 py-3 rounded-full bg-[#161616] text-white font-bold text-sm sm:text-base hover:bg-[#2B2B2B] transition flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+                  >
+                    <span className="text-[#FDD116]">경험 질문</span>
+                    <span>시작하기</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleLoadSample}
+                    className="w-full sm:w-auto min-h-[50px] px-6 py-3 rounded-full bg-white border-2 border-[#161616] text-[#161616] font-bold text-sm sm:text-base hover:bg-[#FDD116]/20 transition cursor-pointer whitespace-nowrap"
+                  >
+                    예시 결과 바로 보기
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
         )}
 
         {currentScreen === 'diagnosis' && diagnosis && (
@@ -280,24 +352,22 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer (No-Print) */}
-      <footer className="no-print bg-[#f3efe9] border-t border-[#e3ded5] py-8 sm:py-10 px-4 sm:px-6 mt-16">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left text-xs sm:text-sm text-[#736777]">
+      {/* Quiet Stationery Footer (No-Print) */}
+      <footer className="no-print bg-white border-t border-[#E5E8EC] py-9 px-4 sm:px-6">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left text-xs sm:text-sm text-[#5E6572]">
           <div>
-            <p className="font-bold text-[#352b39] text-base mb-1">
+            <p className="font-display font-bold text-[#161616] text-base mb-1">
               나의 브랜드 발견소
             </p>
-            <p className="leading-relaxed">
-              “경력의 공백이 아니라, 아직 이름 붙이지 않은 경험입니다.”
-            </p>
+            <p>“경력의 공백이 아니라, 아직 이름 붙이지 않은 경험입니다.”</p>
           </div>
 
           <div className="text-center sm:text-right space-y-1">
-            <p className="font-medium text-[#5c5061]">
-              개인정보 비저장 안심 서비스 (브라우저 로컬 저장)
+            <p className="font-semibold text-[#333840]">
+              개인정보 비저장 안심 서비스 · 브라우저 로컬 보관
             </p>
-            <p className="text-[#8e8192]">
-              여성 시민의 강점 발굴과 지속 가능한 사회적 참여를 응원합니다.
+            <p className="text-[#7A828E]">
+              여성 시민의 숨은 경험 발굴과 나다운 도전을 응원합니다.
             </p>
           </div>
         </div>

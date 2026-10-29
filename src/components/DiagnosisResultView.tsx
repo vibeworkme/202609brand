@@ -1,19 +1,8 @@
 import React from 'react';
-import {
-  ArrowRight,
-  ArrowLeft,
-  CheckCircle2,
-  Sparkles,
-  AlertCircle,
-  Briefcase,
-  Layers,
-  HeartHandshake,
-  Tag,
-  ShieldAlert,
-  Info
-} from 'lucide-react';
+import { ArrowLeft, ChevronRight, Check } from 'lucide-react';
 import { STRENGTH_TYPES } from '../data/strengthTypes';
 import { DiagnosisResult, StrengthTypeKey, UserBasicInfo } from '../types';
+import { SpeechBubbleTitle, CardCharacterAvatar } from './StationeryIllustrations';
 
 interface DiagnosisResultViewProps {
   basicInfo: UserBasicInfo;
@@ -34,211 +23,298 @@ export const DiagnosisResultView: React.FC<DiagnosisResultViewProps> = ({
   const secondary1Info = STRENGTH_TYPES[diagnosis.secondaryTypes[0]];
   const secondary2Info = STRENGTH_TYPES[diagnosis.secondaryTypes[1]];
 
+  const allScoreEntries = (Object.keys(STRENGTH_TYPES) as StrengthTypeKey[]).map((key) => ({
+    key,
+    name: STRENGTH_TYPES[key].name,
+    score: diagnosis.scores[key] || 0,
+    hex: STRENGTH_TYPES[key].themeColor.hex
+  }));
+  const maxScore = Math.max(...allScoreEntries.map((item) => item.score), 12);
+
   const handleToggleKeyword = (kw: string) => {
     let updated = [...diagnosis.selectedKeywords];
     if (updated.includes(kw)) {
       if (updated.length > 1) {
         updated = updated.filter((k) => k !== kw);
       }
+    } else if (updated.length < 3) {
+      updated.push(kw);
     } else {
-      if (updated.length < 3) {
-        updated.push(kw);
-      } else {
-        updated = [...updated.slice(1), kw];
-      }
+      updated = [...updated.slice(1), kw];
     }
     onUpdateKeywords(updated);
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      {/* Top Banner Disclaimer */}
-      <div className="flex items-start gap-2.5 p-3.5 sm:p-4 rounded-xl bg-[#f5f2ee] border border-[#e4dfd6] text-xs sm:text-sm text-[#665c6c] mb-8">
-        <Info className="w-4 h-4 text-[#542344] shrink-0 mt-0.5" />
-        <span>
-          <strong>안내:</strong> 본 진단 결과는 전문 심리검사가 아니며, 살아온 소중한 경험 속에서 자신의 고유한 역량을 재발견하고 브랜딩하기 위한 <strong>자기 탐색용 참고자료</strong>입니다.
-        </span>
-      </div>
-
-      {/* Primary Strength Header Card */}
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#e5e1d8] shadow-xs mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#eeeae2]">
-          <div>
-            <span className="inline-block px-3 py-1 rounded-full bg-[#f3edf4] text-[#542344] text-xs sm:text-sm font-bold mb-2">
-              대표 강점 유형 (Primary)
-            </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#231c26] tracking-tight flex items-center gap-3">
-              <span>{basicInfo.name || '나'}님의 대표 강점은</span>
-              <span className="text-[#542344] underline decoration-[#d9a8c7] decoration-4 underline-offset-6">
-                [{primaryTypeInfo.name}]
-              </span>
-            </h1>
-            <p className="text-base sm:text-lg font-semibold text-[#574d5b] mt-2">
-              “{primaryTypeInfo.oneLiner}”
-            </p>
+    <div className="w-full">
+      {/* =====================================================================
+          1. SUNNY YELLOW SHOWCASE HEADER + SPLIT COLOR-BLOCK PRIMARY CARD
+      ====================================================================== */}
+      <section className="bg-[#FDD116] py-12 sm:py-16 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <SpeechBubbleTitle>
+              {basicInfo.name || '나'}님의 <span className="text-[#FDD116]">강점 타입</span> 리포트!
+            </SpeechBubbleTitle>
           </div>
 
-          <div className="self-start sm:self-center px-4 py-2 rounded-2xl bg-[#542344] text-white text-center shrink-0">
-            <span className="text-[11px] font-medium block text-white/80">시그니처 배지</span>
-            <span className="text-sm font-bold tracking-wide">{primaryTypeInfo.badge}</span>
-          </div>
-        </div>
+          {/* Signature Split Color-Block Result Card */}
+          <div className="relative bg-white rounded-[26px] overflow-hidden shadow-md">
+            {/* Solid Right Color Block matching Primary Type */}
+            <div
+              className="hidden md:block absolute inset-y-0 right-0 w-[34%]"
+              style={{ backgroundColor: primaryTypeInfo.themeColor.hex }}
+              aria-hidden="true"
+            />
 
-        {/* Detailed Explanation */}
-        <div className="py-6">
-          <p className="text-base sm:text-lg text-[#403744] leading-relaxed">
-            {primaryTypeInfo.description}
+            <div className="relative grid grid-cols-1 md:grid-cols-12 items-center p-6 sm:p-9 gap-7">
+              {/* Left Narrative Column (7 cols) */}
+              <div className="md:col-span-7">
+                <div
+                  className="flex items-end gap-4 pb-4 border-b"
+                  style={{ borderColor: `${primaryTypeInfo.themeColor.hex}66` }}
+                >
+                  <CardCharacterAvatar
+                    variant={diagnosis.primaryType}
+                    className="-mt-4"
+                  />
+                  <div className="pb-1">
+                    <p
+                      className="text-xs sm:text-sm font-bold mb-1"
+                      style={{ color: primaryTypeInfo.themeColor.hex }}
+                    >
+                      {primaryTypeInfo.kicker}
+                    </p>
+                    <h1
+                      className="font-display font-bold text-2xl sm:text-4xl tracking-tight"
+                      style={{ color: primaryTypeInfo.themeColor.hex }}
+                    >
+                      {primaryTypeInfo.typeLabel}
+                    </h1>
+                  </div>
+                </div>
+
+                <div className="pt-5">
+                  <p className="text-xs sm:text-sm font-bold text-[#5E6572] mb-1">
+                    대표 강점 · {primaryTypeInfo.badge} · {primaryTypeInfo.englishTitle}
+                  </p>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-[#161616] mb-3">
+                    “{primaryTypeInfo.oneLiner}”
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#333840] leading-relaxed">
+                    {primaryTypeInfo.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Right Stationery Score Sheet overlapping the Color Block (5 cols) */}
+              <div
+                className="md:col-span-5 rounded-2xl p-4 md:p-0"
+                style={{
+                  backgroundColor: primaryTypeInfo.themeColor.hex
+                }}
+              >
+                <div className="bg-grid-paper-subtle rounded-xl p-5 border-2 border-[#161616] shadow-sm">
+                  <div className="flex items-center justify-between pb-2.5 mb-3.5 border-b border-[#DCE1E7]">
+                    <span className="font-display font-bold text-xs text-[#161616]">
+                      [ 6대 강점 분포 노트 ]
+                    </span>
+                    <span className="text-xs font-bold text-[#5E6572] tabular-nums">
+                      점수 현황
+                    </span>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    {allScoreEntries.map((entry) => {
+                      const ratio = Math.min(
+                        100,
+                        Math.max(8, Math.round((entry.score / maxScore) * 100))
+                      );
+                      const isPrimary = entry.key === diagnosis.primaryType;
+                      return (
+                        <div key={entry.key}>
+                          <div className="flex items-center justify-between text-xs mb-1">
+                            <span
+                              className={`font-bold ${
+                                isPrimary ? 'text-[#161616]' : 'text-[#555B65]'
+                              }`}
+                            >
+                              {entry.name} {isPrimary ? '(대표)' : ''}
+                            </span>
+                            <span className="font-bold text-[#161616] tabular-nums">
+                              {entry.score}점
+                            </span>
+                          </div>
+                          <div className="w-full h-2 bg-[#E5E8EC] rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full"
+                              style={{
+                                width: `${ratio}%`,
+                                backgroundColor: isPrimary ? entry.hex : '#8B93A1'
+                              }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="mt-4 text-center text-xs font-medium text-[#161616]/80">
+            본 진단은 전문 심리검사가 아닌, 나의 경험을 브랜드 언어로 정리하기 위한 자기 탐색용 참고 가이드입니다.
           </p>
         </div>
+      </section>
 
-        {/* Secondary Strengths Synergies */}
-        <div className="mt-4 pt-6 border-t border-[#eeeae2]">
-          <h3 className="text-sm font-bold text-[#685e6d] uppercase tracking-wider mb-3">
-            함께 발휘되는 보조 강점 2가지
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            <div className="p-4 rounded-xl bg-[#faf9f7] border border-[#e8e4dc]">
-              <div className="flex items-center gap-2 font-bold text-base text-[#241d27] mb-1">
-                <span className="w-5 h-5 rounded-full bg-[#542344] text-white text-xs flex items-center justify-center">
-                  1
-                </span>
-                <span>{secondary1Info.name}</span>
-                <span className="text-xs font-medium text-[#7d7281]">({secondary1Info.badge})</span>
-              </div>
-              <p className="text-xs sm:text-sm text-[#5d5462] leading-relaxed">
-                {secondary1Info.oneLiner}
-              </p>
+      {/* =====================================================================
+          2. GRAPH-PAPER DETAILS: SYNERGY, BEHAVIORS, JOBS, KEYWORDS
+      ====================================================================== */}
+      <section className="bg-grid-paper py-12 sm:py-16 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Secondary Strengths Synergy */}
+          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#DCE1E7]">
+            <h3 className="font-display font-bold text-lg sm:text-xl text-[#161616] mb-4">
+              01. 함께 발휘되는 보조 강점 시너지
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[secondary1Info, secondary2Info].map((sec, idx) => (
+                <div
+                  key={sec.key}
+                  className="p-5 rounded-2xl bg-[#FAFAFB] border border-[#E2E6EC]"
+                >
+                  <p
+                    className="text-xs font-extrabold mb-1"
+                    style={{ color: sec.themeColor.hex }}
+                  >
+                    보조 강점 0{idx + 1} · {sec.badge}
+                  </p>
+                  <h4 className="font-display font-bold text-lg text-[#161616] mb-1.5">
+                    {sec.typeLabel}
+                  </h4>
+                  <p className="text-sm text-[#4A505A] leading-relaxed">{sec.oneLiner}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Behaviors & Recommended Jobs Split */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            {/* Behaviors */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#DCE1E7]">
+              <h3 className="font-display font-bold text-lg text-[#161616] mb-4">
+                02. 강점이 드러나는 구체적 행동 특징
+              </h3>
+              <ul className="space-y-3 text-sm sm:text-base text-[#2E333B]">
+                {primaryTypeInfo.behaviors.map((beh, idx) => (
+                  <li key={idx} className="flex items-start gap-3 leading-relaxed">
+                    <span
+                      className="font-display font-bold text-xs mt-1 tabular-nums shrink-0"
+                      style={{ color: primaryTypeInfo.themeColor.hex }}
+                    >
+                      0{idx + 1}
+                    </span>
+                    <span>{beh}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#faf9f7] border border-[#e8e4dc]">
-              <div className="flex items-center gap-2 font-bold text-base text-[#241d27] mb-1">
-                <span className="w-5 h-5 rounded-full bg-[#542344] text-white text-xs flex items-center justify-center">
-                  2
-                </span>
-                <span>{secondary2Info.name}</span>
-                <span className="text-xs font-medium text-[#7d7281]">({secondary2Info.badge})</span>
-              </div>
-              <p className="text-xs sm:text-sm text-[#5d5462] leading-relaxed">
-                {secondary2Info.oneLiner}
-              </p>
+            {/* Recommended Jobs */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#DCE1E7]">
+              <h3 className="font-display font-bold text-lg text-[#161616] mb-4">
+                03. 추천 활동 및 직무 분야
+              </h3>
+              <ul className="space-y-2.5 text-sm sm:text-base text-[#1E232A]">
+                {primaryTypeInfo.recommendedJobs.map((job, idx) => (
+                  <li
+                    key={idx}
+                    className="px-4 py-3 rounded-xl bg-[#FAFAFB] border border-[#E5E8EC] font-bold flex items-center gap-2.5"
+                  >
+                    <Check
+                      className="w-4 h-4 shrink-0 stroke-[3]"
+                      style={{ color: primaryTypeInfo.themeColor.hex }}
+                    />
+                    <span>{job}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Behavioral Traits & Recommended Activities */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {/* Behaviors */}
-        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#e5e1d8] shadow-xs">
-          <div className="flex items-center gap-2 text-base font-bold text-[#231c26] mb-4">
-            <CheckCircle2 className="w-5 h-5 text-[#542344]" />
-            <h3>강점을 보여주는 구체적 행동 특징</h3>
-          </div>
-          <ul className="space-y-3 text-sm sm:text-base text-[#463d4a]">
-            {primaryTypeInfo.behaviors.map((beh, idx) => (
-              <li key={idx} className="flex items-start gap-2.5 leading-snug">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#542344] mt-2 shrink-0" />
-                <span>{beh}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Recommended Jobs & Fields */}
-        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#e5e1d8] shadow-xs">
-          <div className="flex items-center gap-2 text-base font-bold text-[#231c26] mb-4">
-            <Briefcase className="w-5 h-5 text-[#542344]" />
-            <h3>활용할 수 있는 활동 및 직무 분야</h3>
-          </div>
-          <ul className="space-y-2.5 text-sm sm:text-base text-[#463d4a]">
-            {primaryTypeInfo.recommendedJobs.map((job, idx) => (
-              <li
-                key={idx}
-                className="p-2.5 rounded-lg bg-[#faf8f9] border border-[#eee5ef] font-medium text-[#3b323e]"
-              >
-                {job}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* Caution & Self-Care Tips */}
-      <div className="bg-[#fef9f7] rounded-2xl p-6 border border-[#f0e4dc] mb-8">
-        <div className="flex items-start gap-3">
-          <ShieldAlert className="w-5 h-5 text-[#b35327] shrink-0 mt-0.5" />
-          <div>
-            <h4 className="font-bold text-base text-[#8a3814] mb-1">
-              주의해야 할 약점과 셀프케어 팁
-            </h4>
-            <p className="text-sm sm:text-base text-[#5c3e32] leading-relaxed">
+          {/* Self-Care Caution Note */}
+          <div className="bg-[#FFFBEB] rounded-3xl p-6 sm:p-7 border border-[#F5D97E]">
+            <h3 className="font-display font-bold text-base sm:text-lg text-[#161616] mb-1.5">
+              04. 지치지 않기 위한 셀프케어 체크포인트
+            </h3>
+            <p className="text-sm sm:text-base text-[#3B3F46] leading-relaxed">
               {primaryTypeInfo.cautions}
             </p>
           </div>
-        </div>
-      </div>
 
-      {/* Recommended Keywords Selection */}
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#e5e1d8] shadow-xs mb-8">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <Tag className="w-5 h-5 text-[#542344]" />
-            <h3 className="text-lg font-bold text-[#231c26]">
-              추천 브랜드 키워드 5개
-            </h3>
+          {/* Interactive Keyword Selector */}
+          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#DCE1E7]">
+            <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+              <h3 className="font-display font-bold text-lg sm:text-xl text-[#161616]">
+                05. 프로필에 담을 브랜드 키워드 3개 선택
+              </h3>
+              <span className="text-xs font-bold text-[#5E6572] tabular-nums">
+                선택됨 {diagnosis.selectedKeywords.length} / 3
+              </span>
+            </div>
+            <p className="text-sm text-[#5E6572] mb-5">
+              나를 가장 잘 나타내는 단어 3개를 골라주세요. 완성될 1페이지 프로필 상단에 대표 키워드로 표시됩니다.
+            </p>
+
+            <div className="flex flex-wrap gap-2.5">
+              {diagnosis.recommendedKeywords.map((kw) => {
+                const isSelected = diagnosis.selectedKeywords.includes(kw);
+                return (
+                  <button
+                    key={kw}
+                    type="button"
+                    onClick={() => handleToggleKeyword(kw)}
+                    className={`px-4 py-2.5 rounded-full text-sm font-bold border-2 transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+                      isSelected
+                        ? 'border-[#161616] bg-[#161616] text-[#FDD116]'
+                        : 'border-[#D5DBE3] bg-white text-[#3B4048] hover:border-[#161616]'
+                    }`}
+                  >
+                    <span>#{kw}</span>
+                    {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-          <span className="text-xs font-semibold text-[#542344] bg-[#f7f2f8] px-2.5 py-1 rounded-md">
-            프로필에 담을 키워드 3개 선택
-          </span>
+
+          {/* Bottom Navigation CTA */}
+          <div className="pt-2 flex items-center justify-between gap-4">
+            <button
+              id="diagnosis-back-btn"
+              type="button"
+              onClick={onBackToQuestions}
+              className="min-h-[52px] px-6 py-3 rounded-full bg-white border-2 border-[#161616] text-[#161616] font-bold text-base hover:bg-[#FAFAFA] transition flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span>질문 수정하기</span>
+            </button>
+
+            <button
+              id="diagnosis-next-btn"
+              type="button"
+              onClick={onNext}
+              className="min-h-[52px] px-8 py-3 rounded-full bg-[#161616] text-white font-bold text-base hover:bg-[#2B2B2B] shadow-md transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 active:scale-[0.99]"
+            >
+              <span className="text-[#FDD116]">브랜드 문장</span>
+              <span>만들러 가기</span>
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
-        <p className="text-xs sm:text-sm text-[#6c6271] mb-5">
-          나를 가장 잘 표현하는 단어를 클릭하여 선택해보세요. (프로필에는 선택된 3개가 대표로 노출됩니다)
-        </p>
-
-        <div className="flex flex-wrap gap-2.5">
-          {diagnosis.recommendedKeywords.map((kw) => {
-            const isSelected = diagnosis.selectedKeywords.includes(kw);
-            return (
-              <button
-                key={kw}
-                type="button"
-                onClick={() => handleToggleKeyword(kw)}
-                className={`px-4 py-2.5 rounded-xl text-sm font-bold border-2 transition cursor-pointer flex items-center gap-1.5 ${
-                  isSelected
-                    ? 'border-[#542344] bg-[#542344] text-white shadow-xs'
-                    : 'border-[#dfd9d0] bg-[#faf9f8] text-[#4d4452] hover:border-[#bda8be]'
-                }`}
-              >
-                <span>#{kw}</span>
-                {isSelected && <span className="text-xs">✓</span>}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex items-center justify-between gap-4">
-        <button
-          id="diagnosis-back-btn"
-          type="button"
-          onClick={onBackToQuestions}
-          className="min-h-[52px] px-6 py-3 rounded-xl border border-[#d2ccc3] text-[#4d4452] font-bold text-base hover:bg-white transition flex items-center gap-2 cursor-pointer"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span>질문 수정하기</span>
-        </button>
-
-        <button
-          id="diagnosis-next-btn"
-          type="button"
-          onClick={onNext}
-          className="min-h-[52px] px-8 py-3 rounded-xl bg-[#542344] text-white font-bold text-base hover:bg-[#431936] transition flex items-center gap-2 shadow-xs cursor-pointer active:scale-95"
-        >
-          <span>브랜드 문장 만들기</span>
-          <ArrowRight className="w-5 h-5" />
-        </button>
-      </div>
+      </section>
     </div>
   );
 };

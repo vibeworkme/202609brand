@@ -5,9 +5,12 @@ export const STRENGTH_TYPES: Record<StrengthTypeKey, StrengthTypeInfo> = {
     key: 'planning',
     name: '기획형',
     englishTitle: 'Planner & Structurer',
+    kicker: '구조의! 구조에 의한! 구조를 위한!',
+    typeLabel: '파워 [ 기획 ] 타입',
     oneLiner: '복잡한 일을 순서와 구조로 정리하는 사람',
     badge: '체계와 구조의 설계자',
-    description: '흩어져 있는 다양한 정보와 일정, 자원을 일목요연하게 정리하고 흐름을 세우는 데 탁월합니다. 불확실한 상황에서도 한 걸음 뒤로 물러서서 전체 지도를 그리고 우선순위를 매길 줄 아는 든든한 조율자입니다.',
+    description:
+      '흩어져 있는 다양한 정보와 일정, 자원을 일목요연하게 정리하고 흐름을 세우는 데 탁월합니다. 불확실한 상황에서도 한 걸음 뒤로 물러서서 전체 지도를 그리고 우선순위를 매길 줄 아는 든든한 조율자입니다.',
     behaviors: [
       '산만한 프로젝트나 살림, 행정 업무를 매뉴얼과 체크리스트로 명확히 구조화합니다.',
       '일의 선후 관계를 정확히 파악하여 병목 현상을 미리 방지합니다.',
@@ -21,23 +24,28 @@ export const STRENGTH_TYPES: Record<StrengthTypeKey, StrengthTypeInfo> = {
       '공간 및 라이프스타일 정리수납 컨설턴트',
       '비영리·시민단체 운영 실무자'
     ],
-    cautions: '완벽한 계획을 세우려다 첫걸음을 내딛는 시점이 늦어질 수 있습니다. 계획이 100% 갖춰지지 않더라도 70% 상태에서 가볍게 시도해보는 실험적 태도가 도움이 됩니다.',
+    cautions:
+      '완벽한 계획을 세우려다 첫걸음을 내딛는 시점이 늦어질 수 있습니다. 계획이 100% 갖춰지지 않더라도 70% 상태에서 가볍게 시도해보는 실험적 태도가 도움이 됩니다.',
     keywords: ['체계적정리', '구조화능력', '우선순위기획', '효율적조율', '안정적운영'],
     iconName: 'LayoutGrid',
     themeColor: {
-      bg: 'bg-stone-800',
-      border: 'border-stone-700',
-      text: 'text-stone-900',
-      lightBg: 'bg-stone-100'
+      hex: '#00994C',
+      bg: 'bg-[#00994C]',
+      border: 'border-[#00994C]',
+      text: 'text-[#00994C]',
+      lightBg: 'bg-[#E9F7EF]'
     }
   },
   execution: {
     key: 'execution',
     name: '실행형',
     englishTitle: 'Action Driver',
+    kicker: '고민보단 행동! 현장에서 답을 찾는',
+    typeLabel: '파워 [ 실행 ] 타입',
     oneLiner: '생각을 실제 행동과 결과로 만드는 사람',
     badge: '돌파와 완수의 실천가',
-    description: '말과 생각에 머무르지 않고 일단 부딪히며 해답을 찾아내는 추진력의 소유자입니다. 어떤 난관이 생겨도 현장에서 대안을 찾아내며, 시작한 일은 끝까지 책임지고 매듭짓는 힘이 있습니다.',
+    description:
+      '말과 생각에 머무르지 않고 일단 부딪히며 해답을 찾아내는 추진력의 소유자입니다. 어떤 난관이 생겨도 현장에서 대안을 찾아내며, 시작한 일은 끝까지 책임지고 매듭짓는 힘이 있습니다.',
     behaviors: [
       '주저하거나 망설이기보다 "일단 한번 해보자"며 가볍게 첫걸음을 뗍니다.',
       '돌발 변수나 문제가 생겼을 때 빠르게 현장 중심으로 대안을 실행합니다.',
@@ -51,23 +59,28 @@ export const STRENGTH_TYPES: Record<StrengthTypeKey, StrengthTypeInfo> = {
       '목표 달성 습관 형성 코치',
       '신규 프로젝트 런칭 매니저'
     ],
-    cautions: '주변의 속도를 기다리지 못하거나 혼자서 모든 짐을 지고 달리다 번아웃을 겪을 수 있습니다. 동료들과 호흡을 맞추고 쉬어가는 완급 조절이 필요합니다.',
+    cautions:
+      '주변의 속도를 기다리지 못하거나 혼자서 모든 짐을 지고 달리다 번아웃을 겪을 수 있습니다. 동료들과 호흡을 맞추고 쉬어가는 완급 조절이 필요합니다.',
     keywords: ['강력한추진력', '현장해결력', '책임완수', '목표지향', '즉각실행'],
     iconName: 'Zap',
     themeColor: {
-      bg: 'bg-[#5b2447]',
-      border: 'border-[#5b2447]',
-      text: 'text-[#5b2447]',
-      lightBg: 'bg-[#faf0f5]'
+      hex: '#F25235',
+      bg: 'bg-[#F25235]',
+      border: 'border-[#F25235]',
+      text: 'text-[#F25235]',
+      lightBg: 'bg-[#FDEEEB]'
     }
   },
   relationship: {
     key: 'relationship',
     name: '관계형',
     englishTitle: 'Connector & Facilitator',
+    kicker: '사람과 사람 사이 다리를 놓는',
+    typeLabel: '파워 [ 관계 ] 타입',
     oneLiner: '사람을 연결하고 협력을 만드는 사람',
     badge: '환대와 연결의 촉진자',
-    description: '사람 사이의 숨겨진 장점을 알아보고 서로에게 필요한 존재를 이어주는 다리 역할을 합니다. 낯선 사람도 편안하게 만드는 포용력과 경청의 태도로 단절된 관계를 풀고 따뜻한 연대를 이끌어냅니다.',
+    description:
+      '사람 사이의 숨겨진 장점을 알아보고 서로에게 필요한 존재를 이어주는 다리 역할을 합니다. 낯선 사람도 편안하게 만드는 포용력과 경청의 태도로 단절된 관계를 풀고 따뜻한 연대를 이끌어냅니다.',
     behaviors: [
       '모임에서 소외되는 사람 없이 모두가 자기 목소리를 내도록 환대합니다.',
       '서로 다른 의견이 부딪힐 때 감정을 다독이며 부드럽게 합의점을 찾습니다.',
@@ -81,23 +94,28 @@ export const STRENGTH_TYPES: Record<StrengthTypeKey, StrengthTypeInfo> = {
       '서포터즈 및 고객경험(CX) 매니저',
       '소통·공감 워크숍 진행자'
     ],
-    cautions: '주변 사람들의 부탁을 거절하지 못하거나 타인의 갈등과 감정을 과도하게 떠안아 지칠 수 있습니다. 건강한 심리적 경계선과 거절의 기술이 필요합니다.',
+    cautions:
+      '주변 사람들의 부탁을 거절하지 못하거나 타인의 갈등과 감정을 과도하게 떠안아 지칠 수 있습니다. 건강한 심리적 경계선과 거절의 기술이 필요합니다.',
     keywords: ['사람연결', '경청과공감', '따뜻한환대', '갈등중재', '신뢰네트워크'],
     iconName: 'Users',
     themeColor: {
-      bg: 'bg-[#4a2e58]',
-      border: 'border-[#4a2e58]',
-      text: 'text-[#4a2e58]',
-      lightBg: 'bg-[#f6eff9]'
+      hex: '#1479C9',
+      bg: 'bg-[#1479C9]',
+      border: 'border-[#1479C9]',
+      text: 'text-[#1479C9]',
+      lightBg: 'bg-[#EBF5FC]'
     }
   },
   care: {
     key: 'care',
     name: '돌봄형',
     englishTitle: 'Caregiver & Supporter',
+    kicker: '말하지 않은 필요까지 먼저 살피는',
+    typeLabel: '파워 [ 돌봄 ] 타입',
     oneLiner: '상대방의 필요를 파악하고 세심하게 지원하는 사람',
     badge: '세심한 지원과 회복의 쉼터',
-    description: '타인의 작은 변화와 말하지 않은 불편함까지 기민하게 감지하고 먼저 손을 내미는 섬세함을 지녔습니다. 겉으로 드러나지 않는 궂은일도 묵묵히 챙겨 모두가 안전하고 편안하게 머물 수 있는 환경을 만듭니다.',
+    description:
+      '타인의 작은 변화와 말하지 않은 불편함까지 기민하게 감지하고 먼저 손을 내미는 섬세함을 지녔습니다. 겉으로 드러나지 않는 궂은일도 묵묵히 챙겨 모두가 안전하고 편안하게 머물 수 있는 환경을 만듭니다.',
     behaviors: [
       '상대의 표정이나 어투에서 미세한 피로와 필요를 먼저 알아차립니다.',
       '다른 사람이 실수하거나 당황했을 때 조용히 뒤에서 수습해줍니다.',
@@ -111,23 +129,28 @@ export const STRENGTH_TYPES: Record<StrengthTypeKey, StrengthTypeInfo> = {
       '식문화·건강 살림 큐레이터',
       '상담 및 정서 지원 멘토'
     ],
-    cautions: '남을 돌보느라 정작 자신의 몸과 마음이 지치는 줄 모를 수 있습니다. "나를 먼저 돌보는 시간"을 매일의 첫 번째 일정으로 정해두는 용기가 필요합니다.',
+    cautions:
+      '남을 돌보느라 정작 자신의 몸과 마음이 지치는 줄 모를 수 있습니다. "나를 먼저 돌보는 시간"을 매일의 첫 번째 일정으로 정해두는 용기가 필요합니다.',
     keywords: ['세심한돌봄', '안전지대조성', '정서적지지', '맞춤형지원', '섬세한배려'],
     iconName: 'HeartHandshake',
     themeColor: {
-      bg: 'bg-[#3b3a4a]',
-      border: 'border-[#3b3a4a]',
-      text: 'text-[#3b3a4a]',
-      lightBg: 'bg-[#f1f0f5]'
+      hex: '#E04F5F',
+      bg: 'bg-[#E04F5F]',
+      border: 'border-[#E04F5F]',
+      text: 'text-[#E04F5F]',
+      lightBg: 'bg-[#FDEEEF]'
     }
   },
   creation: {
     key: 'creation',
     name: '창작형',
     englishTitle: 'Creator & Expresser',
+    kicker: '평범한 일상을 특별한 영감으로 바꾸는',
+    typeLabel: '파워 [ 창작 ] 타입',
     oneLiner: '새로운 아이디어와 표현을 만드는 사람',
     badge: '남다른 시선의 창작자',
-    description: '남들이 무심코 지나치는 일상의 장면에서도 독특한 영감을 발견하고, 이를 글, 이미지, 공예, 새로운 방식의 경험으로 재해석하는 예술적이고 창의적인 감각을 지녔습니다.',
+    description:
+      '남들이 무심코 지나치는 일상의 장면에서도 독특한 영감을 발견하고, 이를 글, 이미지, 공예, 새로운 방식의 경험으로 재해석하는 예술적이고 창의적인 감각을 지녔습니다.',
     behaviors: [
       '판에 박힌 형식보다 나만의 독창적인 아이디어와 디테일을 담아냅니다.',
       '시각적 미감이나 글, 색감, 연출을 통해 사람들의 눈길을 사로잡습니다.',
@@ -141,23 +164,28 @@ export const STRENGTH_TYPES: Record<StrengthTypeKey, StrengthTypeInfo> = {
       '로컬 문화공간 디렉터',
       'SNS 비주얼 브랜딩 디자이너'
     ],
-    cautions: '흥미가 떨어지거나 단순 반복 업무를 마주할 때 쉽게 무기력해질 수 있습니다. 창작을 거창한 결과물이 아닌 일상의 작은 루틴으로 쪼개어 지속하는 지혜가 필요합니다.',
+    cautions:
+      '흥미가 떨어지거나 단순 반복 업무를 마주할 때 쉽게 무기력해질 수 있습니다. 창작을 거창한 결과물이 아닌 일상의 작은 루틴으로 쪼개어 지속하는 지혜가 필요합니다.',
     keywords: ['독창적시선', '스토리텔링', '감각적표현', '새로운영감', '창의적해결'],
     iconName: 'Sparkles',
     themeColor: {
-      bg: 'bg-[#5e3848]',
-      border: 'border-[#5e3848]',
-      text: 'text-[#5e3848]',
-      lightBg: 'bg-[#f9f1f4]'
+      hex: '#D97706',
+      bg: 'bg-[#D97706]',
+      border: 'border-[#D97706]',
+      text: 'text-[#D97706]',
+      lightBg: 'bg-[#FEF6E6]'
     }
   },
   growth: {
     key: 'growth',
     name: '성장형',
     englishTitle: 'Growth Mentor & Learner',
+    kicker: '어제보다 단단한 내일을 만드는',
+    typeLabel: '파워 [ 성장 ] 타입',
     oneLiner: '배우고 가르치며 변화를 돕는 사람',
     badge: '지식 나눔과 성장의 나침반',
-    description: '배움에 대한 지적 호기심이 넘치고, 자신이 깨달은 지식과 지혜를 알기 쉽게 다듬어 타인에게 나누는 것을 진심으로 기뻐합니다. 사람들의 잠재력을 발견하고 그들이 한 단계 도약하도록 돕는 길잡이입니다.',
+    description:
+      '배움에 대한 지적 호기심이 넘치고, 자신이 깨달은 지식과 지혜를 알기 쉽게 다듬어 타인에게 나누는 것을 진심으로 기뻐합니다. 사람들의 잠재력을 발견하고 그들이 한 단계 도약하도록 돕는 길잡이입니다.',
     behaviors: [
       '관심 있는 분야의 책, 강의, 워크숍을 주도적으로 찾아 공부합니다.',
       '어려운 내용이나 정보를 누구나 이해하기 쉬운 언어로 바꾸어 설명합니다.',
@@ -171,14 +199,16 @@ export const STRENGTH_TYPES: Record<StrengthTypeKey, StrengthTypeInfo> = {
       '지식 콘텐츠 큐레이터 및 뉴스레터 발행인',
       '청소년·여성 자기계발 코치'
     ],
-    cautions: '언제나 "나는 아직 부족하다"는 생각(가면 증후군)에 갇혀 배움에만 머무를 수 있습니다. 완벽하지 않아도 지금 알고 있는 것으로도 충분히 누군가의 든든한 앞잡이가 될 수 있습니다.',
+    cautions:
+      '언제나 "나는 아직 부족하다"는 생각(가면 증후군)에 갇혀 배움에만 머무를 수 있습니다. 완벽하지 않아도 지금 알고 있는 것으로도 충분히 누군가의 든든한 길잡이가 될 수 있습니다.',
     keywords: ['지식큐레이션', '배움과동기부여', '성장코칭', '알기쉬운전달', '잠재력발견'],
     iconName: 'Compass',
     themeColor: {
-      bg: 'bg-[#2d4059]',
-      border: 'border-[#2d4059]',
-      text: 'text-[#2d4059]',
-      lightBg: 'bg-[#edf2f7]'
+      hex: '#0D4085',
+      bg: 'bg-[#0D4085]',
+      border: 'border-[#0D4085]',
+      text: 'text-[#0D4085]',
+      lightBg: 'bg-[#EBF1FA]'
     }
   }
 };

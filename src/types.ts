@@ -18,7 +18,10 @@ export interface StrengthTypeInfo {
   cautions: string;         // 주의해야 할 약점 및 보완 팁
   keywords: string[];       // 추천 브랜드 키워드
   iconName: string;
+  kicker: string;           // e.g. "계획의! 계획에 의한! 계획을 위한!"
+  typeLabel: string;        // e.g. "파워 [ 기획 ] 타입"
   themeColor: {
+    hex: string;
     bg: string;
     border: string;
     text: string;
